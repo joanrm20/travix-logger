@@ -10,7 +10,7 @@ export default function createTransport(opts = {}) {
       super(options);
 
       if (typeof opts.initialize !== 'undefined') {
-        opts.initialize.bind(this)();
+        opts.initialize.bind(this)(options);
       }
 
       this.log = opts.log.bind(this);
