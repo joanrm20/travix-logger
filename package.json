@@ -1,0 +1,29 @@
+{
+  "name": "travix-logger",
+  "version": "0.0.1",
+  "description": "Logger library for the browser and node.js",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ",
+    "test": "mocha"
+  },
+  "author": {
+    "name": "Travix International",
+    "url": "http://travix.com"
+  },
+  "contributors": [
+    {
+      "name": "Fahad Ibnay Heylaal",
+      "url": "https://github.com/fahad19"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-preset-travix": "^1.1.0",
+    "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
+    "eslint": "^3.7.1",
+    "mocha": "^3.1.1"
+  }
+}
