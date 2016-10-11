@@ -17,11 +17,11 @@ $ npm install --save travix-logger
 Example usage in ES6 (in node.js and webpack/browserify bundles):
 
 ```js
-import { Logger, ConsoleTransport } from 'travix-logger';
+import { Logger, configureConsoleTransport } from 'travix-logger';
 
 const logger = new Logger({
   transports: [
-    ConsoleTransport
+    configureConsoleTransport()
   ]
 });
 
@@ -87,11 +87,11 @@ Transports are responsible for storing the logs. Each instance of `Logger` can h
 This library already ships with a `ConsoleTransport` by default, which can be used right away:
 
 ```js
-import { Logger, ConsoleTransport } from 'travix-logger';
+import { Logger, configureConsoleTransport } from 'travix-logger';
 
 const logger = new Logger({
   transports: [
-    ConsoleTransport
+    configureConsoleTransport()
   ]
 });
 ```
@@ -233,6 +233,33 @@ Called when the Tranport class is constructed.
 > log(level, message, meta, cb)
 
 This method must be implemented when creating a new Transport.
+
+---
+
+# Built-in transports
+
+## Console
+
+A configureable `ConsoleTransport` is shipped with the package:
+
+```js
+import { Logger, configureConsoleTransport } from 'travix-logger';
+
+const logger = new Logger({
+  transports: [
+    configureConsoleTransport({
+      // you can optionally override the `console` function
+      console: myAwesomeConsoleObject
+    })
+  ]
+});
+```
+
+### Options
+
+#### `console`
+
+Unless any function is provided here, it will default to the global scope's `console` object. Like `window.console` in the browser.
 
 ---
 

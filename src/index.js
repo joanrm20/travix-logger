@@ -1,13 +1,17 @@
 /* global module */
 import constants from './constants';
 import createTransport from './createTransport';
+import Transport from './Transport';
 import Logger from './Logger';
 
-import ConsoleTransport from './transports/ConsoleTransport';
+import configureConsoleTransport from './transports/console';
 
 module.exports = {
-  ConsoleTransport,
+  constants,
   createTransport,
+  Transport,
   Logger,
-  constants
+
+  // configureable transports
+  configureConsoleTransport
 };
