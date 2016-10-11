@@ -7,7 +7,8 @@ module.exports = {
     library: 'TravixLogger'
   },
   externals: {
-    async: 'async',
-    lodash: '_'
+    'async': 'async',
+    'isomorphic-fetch': 'fetch',
+    'lodash': '_'
   }
 };

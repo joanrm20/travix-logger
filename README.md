@@ -261,6 +261,74 @@ const logger = new Logger({
 
 Unless any function is provided here, it will default to the global scope's `console` object. Like `window.console` in the browser.
 
+## Http
+
+Transport for sending log data to a remote location:
+
+```js
+import { Logger, configureHttpTransport } from 'travix-logger';
+
+const logger = new Logger({
+  transports: [
+    configureHttpTransport({
+      // required
+      url: 'https://logs.example.com/submit',
+
+      // optional
+      method: 'POST',
+      formatBody(level, message, meta) {
+        return JSON.stringify({
+          level,
+          message,
+          ...meta
+        });
+      }
+    })
+  ]
+})
+```
+
+### Options
+
+#### `url`
+
+URL to send the log data to.
+
+#### `method`
+
+One of the HTTP methods, defaults to `POST`.
+
+`GET` and `HEAD` are not allowed, since they do not support `body`.
+
+#### `formatBody`
+
+A function accepting `(level, message, meta)`, and returning a string to be used as `body` value.
+
+#### `headers`
+
+Follows fetch API. Currently defaults to:
+
+```
+{
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+}
+```
+
+#### Other fetch API options
+
+Supports:
+
+* `credentials`
+* `mode`
+* `cache`
+* `redirect`
+* `referrer`
+* `referrerPolicy`
+* `integrity`
+
+See [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch) documentation.
+
 ---
 
 ## Release

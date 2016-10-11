@@ -3,6 +3,8 @@ export default class Transport {
     this.options = {
       ...opts
     };
+
+    this.logger = this.options.logger;
   }
 
   log(level, message, meta, cb) {
