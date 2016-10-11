@@ -9,3 +9,5 @@ lib
 
 coverage
 .nyc_output
+
+dist/*.js
