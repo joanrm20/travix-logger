@@ -8,7 +8,7 @@ export default class Logger {
     this.options = {
       levels: defaultLevels,
 
-      // array of Transport instances
+      // array of Transport classes
       transports: [],
 
       // array of formatter functions

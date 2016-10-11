@@ -4,7 +4,7 @@
   "description": "Logger library for the browser and node.js",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ",
+    "lint": "eslint src/**/*.js test/**/*.spec.js",
     "test": "mocha"
   },
   "author": {
