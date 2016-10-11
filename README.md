@@ -34,7 +34,6 @@ logger.error('Some error occurred', { meta: 'values' });
 In the browser:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"></script>
 <script src="https://unpkg.com/async@1.5.2/dist/async.min.js"></script>
 
 <script src="https://unpkg.com/travix-logger@latest/dist/travix-logger.min.js"></script>

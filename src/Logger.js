@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import async from 'async';
 
 import { defaultLevels } from './constants';
@@ -27,7 +26,9 @@ export default class Logger {
     });
 
     // generated level methods
-    _.each(this.options.levels, (level, levelName) => {
+    Object.keys(this.options.levels).forEach((levelName) => {
+      const level = this.options.levels[levelName];
+
       const levelMethodName = (typeof level.methodName !== 'undefined')
         ? level.methodName
         : levelName;
@@ -43,7 +44,10 @@ export default class Logger {
       let formatted = {
         level,
         message,
-        meta: _.defaults(meta, this.options.defaultMeta)
+        meta: {
+          ...this.options.defaultMeta,
+          ...meta
+        }
       };
 
       this.options.formatters.forEach((formatter) => {
