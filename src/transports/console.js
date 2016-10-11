@@ -14,6 +14,10 @@ import createTransport from '../createTransport';
  * ```
  */
 export default function configureConsoleTransport(options = {}) {
+  const levels = (typeof options.levels !== 'undefined')
+    ? options.levels
+    : null;
+
   const useConsole = (typeof options.console !== 'undefined')
     ? options.console
     : console; // eslint-disable-line
@@ -24,6 +28,11 @@ export default function configureConsoleTransport(options = {}) {
     },
 
     log(level, message, meta, cb) {
+      if (levels && levels.indexOf(level) === -1) {
+        // skipping
+        return cb(null);
+      }
+
       useConsole.log(`[${level}]`, message, meta);
 
       cb(null);

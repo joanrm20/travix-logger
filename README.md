@@ -260,6 +260,10 @@ const logger = new Logger({
 
 Unless any function is provided here, it will default to the global scope's `console` object. Like `window.console` in the browser.
 
+#### `levels`
+
+Optional array of level names. If present, only those levels will be logged by this transport.
+
 ## Http
 
 Transport for sending log data to a remote location:
@@ -292,6 +296,10 @@ const logger = new Logger({
 #### `url`
 
 URL to send the log data to.
+
+#### `levels`
+
+Optional array of level names. If present, only those levels will be logged by this transport.
 
 #### `method`
 

@@ -28,9 +28,40 @@ describe('Transport :: console', function () {
     consoleTransport.log('error', 'Error message', { key: 'value' }, () => {});
     expect(logs).to.eql([
       {
-        "0": '[error]',
-        "1": 'Error message',
-        "2": { key: 'value' }
+        '0': '[error]',
+        '1': 'Error message',
+        '2': { key: 'value' }
+      }
+    ]);
+  });
+
+  it('calls `console.log` only for certain levels', function () {
+    const logs = [];
+    const fakeConsole = {
+      log(...args) {
+        logs.push({...args});
+      }
+    };
+    const ConsoleTransport = configureConsoleTransport({
+      console: fakeConsole,
+      levels: ['info', 'error']
+    });
+    const consoleTransport = new ConsoleTransport();
+
+    consoleTransport.log('error', 'Error message', { key: 'value' }, () => {});
+    consoleTransport.log('warn', 'Warn message', { key: 'value' }, () => {});
+    consoleTransport.log('info', 'Info message', { key: 'value' }, () => {});
+
+    expect(logs).to.eql([
+      {
+        '0': '[error]',
+        '1': 'Error message',
+        '2': { key: 'value' }
+      },
+      {
+        '0': '[info]',
+        '1': 'Info message',
+        '2': { key: 'value' }
       }
     ]);
   });

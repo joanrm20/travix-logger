@@ -73,12 +73,21 @@ export default function configureHttpTransport(options = {}) {
     throw new Error('Method does not accept `body`.');
   }
 
+  const levels = (typeof options.levels !== 'undefined')
+    ? options.levels
+    : null;
+
   const formatBody = (typeof options.formatBody !== 'undefined')
     ? options.formatBody
     : (level, message, meta) => JSON.stringify({ level, message, ...meta });
 
   return createTransport({
     log(level, message, meta, cb) {
+      if (levels && levels.indexOf(level) === -1) {
+        // skipping
+        return cb(null);
+      }
+
       fetch(options.url, {
         ...fetchOptions,
         body: formatBody(level, message, meta)
