@@ -4,8 +4,13 @@
   "description": "Logger library for the browser and node.js",
   "main": "index.js",
   "scripts": {
+    "cover": "nyc --require babel-register mocha",
+    "dist:lib": "webpack --config ./dist/webpack.config.js",
+    "dist:min": "uglifyjs dist/travix-logger.js --output dist/travix-logger.min.js",
+    "dist": "npm run dist:lib && npm run dist:min",
     "lint": "eslint src/**/*.js test/**/*.spec.js",
-    "test": "mocha"
+    "test": "mocha",
+    "transpile": "babel src --out-dir lib"
   },
   "author": {
     "name": "Travix International",
@@ -19,12 +24,16 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-preset-travix": "^1.1.0",
     "babel-register": "^6.16.3",
     "chai": "^3.5.0",
     "eslint": "^3.7.1",
-    "mocha": "^3.1.1"
+    "mocha": "^3.1.1",
+    "nyc": "^8.3.1",
+    "uglify-js": "^2.7.3",
+    "webpack": "^1.13.2"
   },
   "dependencies": {
     "async": "^1.5.2",

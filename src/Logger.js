@@ -20,12 +20,17 @@ export default class Logger {
       ...opts
     };
 
+    this.transportInstances = this.options.transports.map((Transport) => {
+      return new Transport({
+        logger: this
+      });
+    });
+
     // generated level methods
-    const levelNames = _.keys(this.options.levels);
     _.each(this.options.levels, (level, levelName) => {
       const levelMethodName = (typeof level.methodName !== 'undefined')
         ? level.methodName
-        : leveName;
+        : levelName;
 
       this[levelMethodName] = function (message, meta) {
         this.log(levelName, message, meta);
@@ -34,7 +39,7 @@ export default class Logger {
   }
 
   log(level, message, meta = {}, logCallback = null) {
-    async.each(this.options.transports, (transport, asyncCallback) => {
+    async.each(this.transportInstances, (transport, asyncCallback) => {
       let formatted = {
         level,
         message,

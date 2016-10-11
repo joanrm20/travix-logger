@@ -212,7 +212,7 @@ In addition to the methods listed below, `Logger` instances will also have metho
 
 ## createTransport
 
-> createTransporn(options = {})
+> createTransport(options = {})
 
 ### Attributes
 
