@@ -236,6 +236,16 @@ This method must be implemented when creating a new Transport.
 
 ---
 
+## Release
+
+To release a new version:
+
+```
+$ make release VERSION=patch
+```
+
+`VERSION` value can be `patch`, `minor`, or `major` following [semver](http://semver.org/).
+
 ## License
 
 MIT © [Travix International](http://travix.com)

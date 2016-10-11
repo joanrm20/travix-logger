@@ -47,10 +47,19 @@ export default class Logger {
       };
 
       this.options.formatters.forEach((formatter) => {
-        formatted = formatter(formatted);
+        formatted = formatter(
+          formatted.level,
+          formatted.message,
+          formatted.meta
+        );
       });
 
-      transport(formatted.level, formatted.message, formatted.meta, asyncCallback);
+      transport.log(
+        formatted.level,
+        formatted.message,
+        formatted.meta,
+        asyncCallback
+      );
     }, (err) => {
       if (typeof logCallback === 'function') {
         logCallback(err);

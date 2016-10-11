@@ -1,4 +1,4 @@
-import createTransport from './createTransport';
+import createTransport from '../createTransport';
 
 export default createTransport({
   initialize() {

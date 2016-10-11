@@ -4,6 +4,7 @@
   "description": "Logger library for the browser and node.js",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf lib",
     "cover": "nyc --require babel-register mocha",
     "dist:lib": "webpack --config ./dist/webpack.config.js",
     "dist:min": "uglifyjs dist/travix-logger.js --output dist/travix-logger.min.js",
@@ -32,6 +33,7 @@
     "eslint": "^3.7.1",
     "mocha": "^3.1.1",
     "nyc": "^8.3.1",
+    "rimraf": "^2.5.4",
     "uglify-js": "^2.7.3",
     "webpack": "^1.13.2"
   },

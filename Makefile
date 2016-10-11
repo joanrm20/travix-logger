@@ -7,6 +7,7 @@ release:
 	git pull origin master
 	npm run lint
 	npm test
+	npm run clean
 	npm run transpile
 	npm run dist
 	git add dist/
