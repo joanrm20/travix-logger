@@ -25,10 +25,10 @@ describe('Transport :: console', function () {
     });
 
     const consoleTransport = new ConsoleTransport();
-    consoleTransport.log('error', 'Error message', { key: 'value' }, () => {});
+    consoleTransport.log('Error', 'Error message', { key: 'value' }, () => {});
     expect(logs).to.eql([
       {
-        '0': '[error]',
+        '0': '[Error]',
         '1': 'Error message',
         '2': { key: 'value' }
       }
@@ -44,22 +44,22 @@ describe('Transport :: console', function () {
     };
     const ConsoleTransport = configureConsoleTransport({
       console: fakeConsole,
-      levels: ['info', 'error']
+      levels: ['Information', 'Error']
     });
     const consoleTransport = new ConsoleTransport();
 
-    consoleTransport.log('error', 'Error message', { key: 'value' }, () => {});
-    consoleTransport.log('warn', 'Warn message', { key: 'value' }, () => {});
-    consoleTransport.log('info', 'Info message', { key: 'value' }, () => {});
+    consoleTransport.log('Error', 'Error message', { key: 'value' }, () => {});
+    consoleTransport.log('Warning', 'Warn message', { key: 'value' }, () => {});
+    consoleTransport.log('Information', 'Info message', { key: 'value' }, () => {});
 
     expect(logs).to.eql([
       {
-        '0': '[error]',
+        '0': '[Error]',
         '1': 'Error message',
         '2': { key: 'value' }
       },
       {
-        '0': '[info]',
+        '0': '[Information]',
         '1': 'Info message',
         '2': { key: 'value' }
       }

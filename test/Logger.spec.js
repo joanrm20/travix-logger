@@ -74,16 +74,16 @@ describe('Logger', function () {
       ]
     });
 
-    logger.log('error', 'Error occurred');
+    logger.log('Error', 'Error occurred');
     expect(logs[0]).to.eql({
-      level: 'error',
+      level: 'Error',
       message: 'Error occurred',
       meta: {}
     });
 
     logger.error('Another error', { key: 'value' });
     expect(logs[1]).to.eql({
-      level: 'error',
+      level: 'Error',
       message: 'Another error',
       meta: { key: 'value' }
     });
@@ -97,15 +97,15 @@ describe('Logger', function () {
       ]
     });
 
-    logger.log('error', 'Error occurred');
+    logger.log('Error', 'Error occurred');
 
     expect(logs[0]).to.eql({
-      level: 'error',
+      level: 'Error',
       message: 'Error occurred',
       meta: {}
     });
     expect(logs2[0]).to.eql({
-      level: 'error',
+      level: 'Error',
       message: 'Error occurred',
       meta: {}
     });
@@ -141,8 +141,8 @@ describe('Logger', function () {
 
     logger.info('Info message', { key: 'value' });
     expect(logs[0]).to.eql({
-      level: 'info',
-      message: '[info] Info message',
+      level: 'Information',
+      message: '[Information] Info message',
       meta: {
         key: 'value',
         newKey: 'newValue',
@@ -163,7 +163,7 @@ describe('Logger', function () {
 
     logger.info('Info message', { key: 'value' });
     expect(logs[0]).to.eql({
-      level: 'info',
+      level: 'Information',
       message: 'Info message',
       meta: {
         defaultKey: 'defaultValue',
@@ -173,7 +173,7 @@ describe('Logger', function () {
 
     logger.info('Second message');
     expect(logs[1]).to.eql({
-      level: 'info',
+      level: 'Information',
       message: 'Second message',
       meta: {
         defaultKey: 'defaultValue'
@@ -190,7 +190,7 @@ describe('Logger', function () {
     });
 
     logger.info('Info message', { key: 'value' });
-    expect(logs[0]).property('level', 'info');
+    expect(logs[0]).property('level', 'Information');
     expect(logs[0]).property('message', 'Info message');
     expect(logs[0].meta).property('key', 'value');
     expect(logs[0].meta.timestamp).to.be.an.instanceof(Date);
@@ -205,7 +205,7 @@ describe('Logger', function () {
     });
 
     logger.info('Info message', { key: 'value' });
-    expect(logs[0]).property('level', 'info');
+    expect(logs[0]).property('level', 'Information');
     expect(logs[0]).property('message', 'Info message');
     expect(logs[0].meta).property('key', 'value');
     expect(logs[0].meta.myTimestampKey).to.be.an.instanceof(Date);

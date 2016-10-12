@@ -39,7 +39,7 @@ describe('Transport :: http', function () {
 
     nock('http://logs.example.com')
       .post('/submit', {
-        level: 'info',
+        level: 'Information',
         message: 'Info message',
         key: 'value'
       })
@@ -51,7 +51,7 @@ describe('Transport :: http', function () {
       });
 
     httpTransport.log(
-      'info',
+      'Information',
       'Info message',
       { key: 'value' },
       function (err, response) {
@@ -63,7 +63,7 @@ describe('Transport :: http', function () {
           expect(body).to.eql({
             ok: true,
             requestBody: {
-              level: 'info',
+              level: 'Information',
               message: 'Info message',
               key: 'value'
             }
@@ -92,7 +92,7 @@ describe('Transport :: http', function () {
 
     nock('http://logs.example.com')
       .post('/submit', {
-        Level: 'info',
+        Level: 'Information',
         Message: 'Info message',
         Meta: {
           key: 'value'
@@ -107,7 +107,7 @@ describe('Transport :: http', function () {
       });
 
     httpTransport.log(
-      'info',
+      'Information',
       'Info message',
       { key: 'value' },
       function (err, response) {
@@ -119,7 +119,7 @@ describe('Transport :: http', function () {
           expect(body).to.eql({
             ok: true,
             requestBody: {
-              Level: 'info',
+              Level: 'Information',
               Message: 'Info message',
               Meta: {
                 key: 'value'

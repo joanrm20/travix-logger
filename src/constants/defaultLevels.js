@@ -1,26 +1,18 @@
 export default {
-  error: {
-    methodName: 'error',
-    color: 'red'
+  Debug: {
+    methodName: 'debug'
   },
-  warn: {
-    methodName: 'warn',
-    color: 'orange'
+  Information: {
+    methodName: 'info'
   },
-  info: {
-    methodName: 'info',
-    color: 'blue'
+  Warning: {
+    methodName: 'warn'
   },
-  verbose: {
-    methodName: 'verbose',
-    color: 'grey'
+  Error: {
+    methodName: 'error'
   },
-  debug: {
-    methodName: 'debug',
-    color: 'grey'
-  },
-  silly: {
-    methodName: 'silly',
-    color: ''
+  Exception: {
+    methodName: 'exception',
+    exception: true
   }
 }
