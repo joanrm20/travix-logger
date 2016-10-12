@@ -25,10 +25,10 @@ const logger = new Logger({
   ]
 });
 
-logger.log('error', 'Some error occurred', { meta: 'values' });
+logger.log('Error', 'EventName', 'Some error occurred', { meta: 'values' });
 
 // same as
-logger.error('Some error occurred', { meta: 'values' });
+logger.error('EventName', 'Some error occurred', { meta: 'values' });
 ```
 
 In the browser:
@@ -49,31 +49,58 @@ In the browser:
 
 ## Levels
 
-Levels are type of logs that you can capture with `travix-logger`. If you have a `warn` level, it will be made accessible to you from the `Logger` instance as `logger.warn(message, meta)`.
+Levels are type of logs that you can capture with `travix-logger`. If you have a `warn` level, it will be made accessible to you from the `Logger` instance as `logger.warn(event, message, meta)` for example.
 
-By default, these levels are used, which follows npm:
+By default, these levels are used:
 
-* `error`
-* `warn`
-* `info`
-* `verbose`
-* `debug`
-* `silly`
+### `debug`
 
-You can override the levels data, at `Logger` instance level as follows:
+> debug(event, message, meta)
+
+Level name: `Debug`.
+
+### `info`
+
+> info(event, message, meta)
+
+Level name: `Information`.
+
+### `warn`
+
+> warn(event, message, meta)
+
+Level name: `Warning`.
+
+### `error`
+
+> error(event, message, meta)
+
+Level name: `Error`.
+
+### `exception`
+
+> exception(event, errorObject, message, meta)
+
+Level name: `Exception`.
 
 ### Custom levels
+
+You can override the levels data, at `Logger` instance level as follows:
 
 ```js
 import { Logger } from 'travix-logger';
 
 const logger = new Logger({
   levels: {
+    // key is the method name
     error: {
-      methodName: 'error'
+      name: 'Error' // the level name passed to formatters and transports
     },
     warn: {
       // if `methodName` is not present, it will default to the key `warn`
+    },
+    exception: {
+      error: true // method then accepts `(event, errorObject, message, meta)`
     }
   }
 });
@@ -111,9 +138,9 @@ export default createTransport({
     // you have access to Logger instance as `this.logger`.
   },
 
-  log(level, message, meta, cb) {
+  log(level, event, message, meta, cb) {
     // do something with the data
-    console.log(level, message, meta);
+    console.log(level, event, message, meta);
 
     // trigger the callback, when successful
     cb(null);
@@ -148,7 +175,7 @@ They are just plain synchronous functions, which accept the same arguments as `L
 ```js
 import { Logger } from 'travix-logger';
 
-function myCustomFormatter(level, message, meta) {
+function myCustomFormatter(level, event, message, meta) {
   meta.addedNewKey = 'some value';
 
   if (meta.creditCardNumber) {
@@ -159,6 +186,7 @@ function myCustomFormatter(level, message, meta) {
 
   return {
     level,
+    event,
     message,
     meta
   };
@@ -213,7 +241,7 @@ In addition to the methods listed below, `Logger` instances will also have metho
 
 #### `log`
 
-> `log(level, message, meta = {}, logCallback = null)`
+> `log(level, event, message, meta = {}, logCallback = null)`
 
 ## createTransport
 
@@ -235,9 +263,13 @@ Called when the Tranport class is constructed.
 
 #### log
 
-> log(level, message, meta, cb)
+> log(level, event, message, meta, cb)
 
 This method must be implemented when creating a new Transport.
+
+If there is any issue while processing the log, call `cb(new Error('something went wrong'))`.
+
+Otherwise, call `cb(null)`;
 
 ---
 
@@ -312,6 +344,10 @@ Optional array of level names. If present, only those levels will be logged by t
 One of the HTTP methods, defaults to `POST`.
 
 `GET` and `HEAD` are not allowed, since they do not support `body`.
+
+#### `eventKey`
+
+For mapping the `event` name in the body. Defaults to `messagetype`.
 
 #### `formatBody`
 

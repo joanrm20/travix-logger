@@ -1,6 +1,9 @@
 import async from 'async';
 
-import { defaultLevels, defaultTimestampKey } from './constants';
+import {
+  defaultLevels,
+  defaultKeys
+} from './constants';
 
 export default class Logger {
   constructor(opts = {}) {
@@ -28,23 +31,38 @@ export default class Logger {
     });
 
     // generated level methods
-    Object.keys(this.options.levels).forEach((levelName) => {
-      const level = this.options.levels[levelName];
+    Object.keys(this.options.levels).forEach((levelMethodName) => {
+      const level = this.options.levels[levelMethodName];
 
-      const levelMethodName = (typeof level.methodName !== 'undefined')
-        ? level.methodName
-        : levelName;
+      const levelName = (typeof level.name !== 'undefined')
+        ? level.name
+        : levelMethodName;
 
-      this[levelMethodName] = function (message, meta) {
-        this.log(levelName, message, meta);
+      // regular logs
+      if (level.error !== true) {
+        this[levelMethodName] = function (event, message, meta, cb) {
+          this.log(levelName, event, message, meta, cb);
+        }.bind(this);
+
+        return;
+      }
+
+      // logs with error
+      this[levelMethodName] = function (event, error, message, meta, cb) {
+        this.log(levelName, event, message, {
+          ...meta,
+          [defaultKeys.errorMessage]: error.message,
+          [defaultKeys.errorStack]: error.stack
+        }, cb);
       }.bind(this);
     });
   }
 
-  log(level, message, meta = {}, logCallback = null) {
+  log(level, event, message, meta = {}, logCallback = null) {
     async.each(this.transportInstances, (transport, asyncCallback) => {
       let formatted = {
         level,
+        event,
         message,
         meta: {
           ...this.options.defaultMeta,
@@ -56,7 +74,7 @@ export default class Logger {
         const timestamp = new Date();
         const timestampKey = (typeof this.options.timestamp === 'string')
           ? this.options.timestamp
-          : defaultTimestampKey;
+          : defaultKeys.timestamp;
 
         formatted.meta[timestampKey] = timestamp;
       }
@@ -64,6 +82,7 @@ export default class Logger {
       this.options.formatters.forEach((formatter) => {
         formatted = formatter(
           formatted.level,
+          formatted.event,
           formatted.message,
           formatted.meta
         );
@@ -71,6 +90,7 @@ export default class Logger {
 
       transport.log(
         formatted.level,
+        formatted.event,
         formatted.message,
         formatted.meta,
         asyncCallback

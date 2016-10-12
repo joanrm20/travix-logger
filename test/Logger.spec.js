@@ -8,9 +8,10 @@ describe('Logger', function () {
   let logs2 = [];
 
   const TestTransport = createTransport({
-    log(level, message, meta, cb) {
+    log(level, event, message, meta, cb) {
       logs.push({
         level,
+        event,
         message,
         meta
       });
@@ -20,9 +21,10 @@ describe('Logger', function () {
   });
 
   const TestTransport2 = createTransport({
-    log(level, message, meta, cb) {
+    log(level, event, message, meta, cb) {
       logs2.push({
         level,
+        event,
         message,
         meta
       });
@@ -46,11 +48,11 @@ describe('Logger', function () {
     const customLevels = {
       error: {
         // same method name
-        methodName: 'error'
+        name: 'error'
       },
       warn: {
         // different method name
-        methodName: 'warning'
+        name: 'warning'
       },
       info: {
         // no specified method name
@@ -62,8 +64,8 @@ describe('Logger', function () {
     });
 
     expect(logger.error).to.be.a('function');
-    expect(logger.warning).to.be.a('function');
-    expect(logger.warn).to.not.be.a('function'); // NOT a function
+    expect(logger.warning).to.not.be.a('function'); // NOT a function
+    expect(logger.warn).to.be.a('function');
     expect(logger.info).to.be.a('function');
   });
 
@@ -74,16 +76,18 @@ describe('Logger', function () {
       ]
     });
 
-    logger.log('Error', 'Error occurred');
+    logger.log('Error', 'CustomErrorEvent', 'Error occurred');
     expect(logs[0]).to.eql({
       level: 'Error',
+      event: 'CustomErrorEvent',
       message: 'Error occurred',
       meta: {}
     });
 
-    logger.error('Another error', { key: 'value' });
+    logger.error('CustomErrorEvent', 'Another error', { key: 'value' });
     expect(logs[1]).to.eql({
       level: 'Error',
+      event: 'CustomErrorEvent',
       message: 'Another error',
       meta: { key: 'value' }
     });
@@ -97,15 +101,17 @@ describe('Logger', function () {
       ]
     });
 
-    logger.log('Error', 'Error occurred');
+    logger.log('Error', 'SomeErrorEvent', 'Error occurred');
 
     expect(logs[0]).to.eql({
       level: 'Error',
+      event: 'SomeErrorEvent',
       message: 'Error occurred',
       meta: {}
     });
     expect(logs2[0]).to.eql({
       level: 'Error',
+      event: 'SomeErrorEvent',
       message: 'Error occurred',
       meta: {}
     });
@@ -117,21 +123,23 @@ describe('Logger', function () {
         TestTransport
       ],
       formatters: [
-        function myCustomFormatter(level, message, meta) {
+        function myCustomFormatter(level, event, message, meta) {
           message = `[${level}] ${message}`;
           meta.newKey = 'newValue';
 
           return {
             level,
+            event,
             message,
             meta
           };
         },
-        function mySecondFormatter(level, message, meta) {
+        function mySecondFormatter(level, event, message, meta) {
           meta.secondFormatter = true;
 
           return {
             level,
+            event,
             message,
             meta
           };
@@ -139,9 +147,10 @@ describe('Logger', function () {
       ]
     });
 
-    logger.info('Info message', { key: 'value' });
+    logger.info('SomeEvent', 'Info message', { key: 'value' });
     expect(logs[0]).to.eql({
       level: 'Information',
+      event: 'SomeEvent',
       message: '[Information] Info message',
       meta: {
         key: 'value',
@@ -161,9 +170,10 @@ describe('Logger', function () {
       }
     });
 
-    logger.info('Info message', { key: 'value' });
+    logger.info('SomeEventHere', 'Info message', { key: 'value' });
     expect(logs[0]).to.eql({
       level: 'Information',
+      event: 'SomeEventHere',
       message: 'Info message',
       meta: {
         defaultKey: 'defaultValue',
@@ -171,9 +181,10 @@ describe('Logger', function () {
       }
     });
 
-    logger.info('Second message');
+    logger.info('SomeEventHere', 'Second message');
     expect(logs[1]).to.eql({
       level: 'Information',
+      event: 'SomeEventHere',
       message: 'Second message',
       meta: {
         defaultKey: 'defaultValue'
@@ -189,8 +200,9 @@ describe('Logger', function () {
       timestamp: true
     });
 
-    logger.info('Info message', { key: 'value' });
+    logger.info('EventName', 'Info message', { key: 'value' });
     expect(logs[0]).property('level', 'Information');
+    expect(logs[0]).property('event', 'EventName');
     expect(logs[0]).property('message', 'Info message');
     expect(logs[0].meta).property('key', 'value');
     expect(logs[0].meta.timestamp).to.be.an.instanceof(Date);
@@ -204,11 +216,30 @@ describe('Logger', function () {
       timestamp: 'myTimestampKey'
     });
 
-    logger.info('Info message', { key: 'value' });
+    logger.info('EventName', 'Info message', { key: 'value' });
     expect(logs[0]).property('level', 'Information');
+    expect(logs[0]).property('event', 'EventName');
     expect(logs[0]).property('message', 'Info message');
     expect(logs[0].meta).property('key', 'value');
     expect(logs[0].meta.myTimestampKey).to.be.an.instanceof(Date);
     expect(logs[0].meta.timestamp).to.be.undefined;
+  });
+
+  it('logs exceptions with error objects', function () {
+    const logger = new Logger({
+      transports: [
+        TestTransport
+      ]
+    });
+
+    const error = new Error('Some error');
+    logger.exception('SomeErrorEvent', error, 'Additional message', { key: 'value' });
+
+    expect(logs[0]).property('level', 'Exception');
+    expect(logs[0]).property('event', 'SomeErrorEvent');
+    expect(logs[0]).property('message', 'Additional message');
+    expect(logs[0].meta).property('key', 'value');
+    expect(logs[0].meta).property('exceptionmessage', 'Some error');
+    expect(logs[0].meta.exceptiondetails).to.contain('Error: Some error');
   });
 });

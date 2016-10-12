@@ -1,6 +1,7 @@
 /* global fetch */
 import 'isomorphic-fetch';
 
+import { defaultKeys } from '../constants';
 import createTransport from '../createTransport';
 
 /**
@@ -20,7 +21,7 @@ import createTransport from '../createTransport';
  *       mode: 'cors',
  *       cache: 'default',
  *       redirect: 'follow',
- *       formatBody(level, message, meta) {
+ *       formatBody(level, event, message, meta) {
  *         return JSON.stringify({
  *           level,
  *           message,
@@ -77,12 +78,23 @@ export default function configureHttpTransport(options = {}) {
     ? options.levels
     : null;
 
+  const eventKey = (typeof options.eventKey !== 'undefined')
+    ? options.eventKey
+    : defaultKeys.event;
+
   const formatBody = (typeof options.formatBody !== 'undefined')
     ? options.formatBody
-    : (level, message, meta) => JSON.stringify({ level, message, ...meta });
+    : (level, event, message, meta) => {
+      return JSON.stringify({
+        level,
+        [eventKey]: event,
+        message,
+        ...meta
+      });
+    };
 
   return createTransport({
-    log(level, message, meta, cb) {
+    log(level, event, message, meta, cb) {
       if (levels && levels.indexOf(level) === -1) {
         // skipping
         return cb(null);
@@ -90,7 +102,7 @@ export default function configureHttpTransport(options = {}) {
 
       fetch(options.url, {
         ...fetchOptions,
-        body: formatBody(level, message, meta)
+        body: formatBody(level, event, message, meta)
       })
         .then((response) => cb(null, response))
         .catch(cb);

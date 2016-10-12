@@ -33,13 +33,15 @@ describe('Transport :: http', function () {
   it('sends data over HTTP on every log', function (done) {
     const HttpTransport = configureHttpTransport({
       url: 'http://logs.example.com/submit',
-      method: 'POST'
+      method: 'POST',
+      eventKey: 'event'
     });
     const httpTransport = new HttpTransport({ logger: true });
 
     nock('http://logs.example.com')
       .post('/submit', {
         level: 'Information',
+        event: 'SomeEvent',
         message: 'Info message',
         key: 'value'
       })
@@ -52,6 +54,7 @@ describe('Transport :: http', function () {
 
     httpTransport.log(
       'Information',
+      'SomeEvent',
       'Info message',
       { key: 'value' },
       function (err, response) {
@@ -64,6 +67,7 @@ describe('Transport :: http', function () {
             ok: true,
             requestBody: {
               level: 'Information',
+              event: 'SomeEvent',
               message: 'Info message',
               key: 'value'
             }
@@ -79,9 +83,10 @@ describe('Transport :: http', function () {
     const HttpTransport = configureHttpTransport({
       url: 'http://logs.example.com/submit',
       method: 'POST',
-      formatBody(level, message, meta) {
+      formatBody(level, event, message, meta) {
         return JSON.stringify({
           Level: level,
+          Event: event,
           Message: message,
           Meta: meta,
           someNewKey: 'someNewValue'
@@ -93,6 +98,7 @@ describe('Transport :: http', function () {
     nock('http://logs.example.com')
       .post('/submit', {
         Level: 'Information',
+        Event: 'SomeEvent',
         Message: 'Info message',
         Meta: {
           key: 'value'
@@ -108,6 +114,7 @@ describe('Transport :: http', function () {
 
     httpTransport.log(
       'Information',
+      'SomeEvent',
       'Info message',
       { key: 'value' },
       function (err, response) {
@@ -120,6 +127,7 @@ describe('Transport :: http', function () {
             ok: true,
             requestBody: {
               Level: 'Information',
+              Event: 'SomeEvent',
               Message: 'Info message',
               Meta: {
                 key: 'value'

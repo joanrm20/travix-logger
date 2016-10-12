@@ -1,18 +1,24 @@
+/**
+ * Keyed by method names.
+ *
+ * Options:
+ *   - name: Actual level name, passed to formatters and transports
+ */
 export default {
-  Debug: {
-    methodName: 'debug'
+  debug: {
+    name: 'Debug'
   },
-  Information: {
-    methodName: 'info'
+  info: {
+    name: 'Information'
   },
-  Warning: {
-    methodName: 'warn'
+  warn: {
+    name: 'Warning'
   },
-  Error: {
-    methodName: 'error'
+  error: {
+    name: 'Error'
   },
-  Exception: {
-    methodName: 'exception',
-    exception: true
+  exception: {
+    name: 'Exception',
+    error: true
   }
 }

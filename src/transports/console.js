@@ -27,13 +27,13 @@ export default function configureConsoleTransport(options = {}) {
 
     },
 
-    log(level, message, meta, cb) {
+    log(level, event, message, meta, cb) {
       if (levels && levels.indexOf(level) === -1) {
         // skipping
         return cb(null);
       }
 
-      useConsole.log(`[${level}]`, message, meta);
+      useConsole.log(`[${level}]`, event, message, meta);
 
       cb(null);
     }
