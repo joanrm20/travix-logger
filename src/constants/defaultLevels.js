@@ -9,7 +9,7 @@ export default {
     name: 'Debug'
   },
   info: {
-    name: 'Information'
+    name: 'Info'
   },
   warn: {
     name: 'Warning'
@@ -18,7 +18,7 @@ export default {
     name: 'Error'
   },
   exception: {
-    name: 'Exception',
+    name: 'Error',
     error: true
   }
 }

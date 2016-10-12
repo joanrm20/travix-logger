@@ -63,7 +63,7 @@ Level name: `Debug`.
 
 > info(event, message, meta)
 
-Level name: `Information`.
+Level name: `Info`.
 
 ### `warn`
 
@@ -81,7 +81,7 @@ Level name: `Error`.
 
 > exception(event, errorObject, message, meta)
 
-Level name: `Exception`.
+Level name: `Error`.
 
 ### Custom levels
 
@@ -325,7 +325,7 @@ const logger = new Logger({
 
       // optional
       method: 'POST',
-      formatBody(level, message, meta) {
+      formatBody(level, event, message, meta) {
         return JSON.stringify({
           level,
           message,

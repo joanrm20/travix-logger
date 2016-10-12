@@ -149,9 +149,9 @@ describe('Logger', function () {
 
     logger.info('SomeEvent', 'Info message', { key: 'value' });
     expect(logs[0]).to.eql({
-      level: 'Information',
+      level: 'Info',
       event: 'SomeEvent',
-      message: '[Information] Info message',
+      message: '[Info] Info message',
       meta: {
         key: 'value',
         newKey: 'newValue',
@@ -172,7 +172,7 @@ describe('Logger', function () {
 
     logger.info('SomeEventHere', 'Info message', { key: 'value' });
     expect(logs[0]).to.eql({
-      level: 'Information',
+      level: 'Info',
       event: 'SomeEventHere',
       message: 'Info message',
       meta: {
@@ -183,7 +183,7 @@ describe('Logger', function () {
 
     logger.info('SomeEventHere', 'Second message');
     expect(logs[1]).to.eql({
-      level: 'Information',
+      level: 'Info',
       event: 'SomeEventHere',
       message: 'Second message',
       meta: {
@@ -201,7 +201,7 @@ describe('Logger', function () {
     });
 
     logger.info('EventName', 'Info message', { key: 'value' });
-    expect(logs[0]).property('level', 'Information');
+    expect(logs[0]).property('level', 'Info');
     expect(logs[0]).property('event', 'EventName');
     expect(logs[0]).property('message', 'Info message');
     expect(logs[0].meta).property('key', 'value');
@@ -217,7 +217,7 @@ describe('Logger', function () {
     });
 
     logger.info('EventName', 'Info message', { key: 'value' });
-    expect(logs[0]).property('level', 'Information');
+    expect(logs[0]).property('level', 'Info');
     expect(logs[0]).property('event', 'EventName');
     expect(logs[0]).property('message', 'Info message');
     expect(logs[0].meta).property('key', 'value');
@@ -235,7 +235,7 @@ describe('Logger', function () {
     const error = new Error('Some error');
     logger.exception('SomeErrorEvent', error, 'Additional message', { key: 'value' });
 
-    expect(logs[0]).property('level', 'Exception');
+    expect(logs[0]).property('level', 'Error');
     expect(logs[0]).property('event', 'SomeErrorEvent');
     expect(logs[0]).property('message', 'Additional message');
     expect(logs[0].meta).property('key', 'value');
@@ -255,7 +255,7 @@ describe('Logger', function () {
     const error = new Error('Some error');
     logger.exception('SomeErrorEvent', error, 'Additional message', { key: 'value' });
 
-    expect(logs[0]).property('level', 'Exception');
+    expect(logs[0]).property('level', 'Error');
     expect(logs[0]).property('event', 'SomeErrorEvent');
     expect(logs[0]).property('message', 'Additional message');
     expect(logs[0].meta).property('key', 'value');
