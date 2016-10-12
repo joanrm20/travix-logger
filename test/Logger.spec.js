@@ -242,4 +242,24 @@ describe('Logger', function () {
     expect(logs[0].meta).property('exceptionmessage', 'Some error');
     expect(logs[0].meta.exceptiondetails).to.contain('Error: Some error');
   });
+
+  it('logs exceptions with error objects in custom keys', function () {
+    const logger = new Logger({
+      transports: [
+        TestTransport
+      ],
+      errorMessageKey: '_errorMessage',
+      errorStackKey: '_errorStack'
+    });
+
+    const error = new Error('Some error');
+    logger.exception('SomeErrorEvent', error, 'Additional message', { key: 'value' });
+
+    expect(logs[0]).property('level', 'Exception');
+    expect(logs[0]).property('event', 'SomeErrorEvent');
+    expect(logs[0]).property('message', 'Additional message');
+    expect(logs[0].meta).property('key', 'value');
+    expect(logs[0].meta).property('_errorMessage', 'Some error');
+    expect(logs[0].meta._errorStack).to.contain('Error: Some error');
+  });
 });

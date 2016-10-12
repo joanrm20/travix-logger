@@ -229,6 +229,14 @@ Defaults to `false`. When `true`, it will add a new Date object to the `timestam
 
 If you want the timestamp in `meta` with a different key, you can pass a string instead.
 
+#### `errorMessageKey`
+
+For mapping `Error.message` value in `meta`, when logging exceptions. Defaults to `exceptionmessage`.
+
+#### `errorStackKey`
+
+For mapping `Error.stack` value in `meta`, when logging exceptions. Defaults to `exceptiondetails`.
+
 ### Properties
 
 #### `options`

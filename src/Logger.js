@@ -47,12 +47,20 @@ export default class Logger {
         return;
       }
 
+      const errorMessageKey = (typeof this.options.errorMessageKey !== 'undefined')
+        ? this.options.errorMessageKey
+        : defaultKeys.errorMessage;
+
+      const errorStackKey = (typeof this.options.errorStackKey !== 'undefined')
+        ? this.options.errorStackKey
+        : defaultKeys.errorStack;
+
       // logs with error
       this[levelMethodName] = function (event, error, message, meta, cb) {
         this.log(levelName, event, message, {
           ...meta,
-          [defaultKeys.errorMessage]: error.message,
-          [defaultKeys.errorStack]: error.stack
+          [errorMessageKey]: error.message,
+          [errorStackKey]: error.stack
         }, cb);
       }.bind(this);
     });
