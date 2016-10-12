@@ -195,7 +195,13 @@ Array of Formatter functions.
 
 (optional) Default `meta` object that logs' meta will extend from.
 
-### Attributes
+#### `timestamp`
+
+Defaults to `false`. When `true`, it will add a new Date object to the `timestamp` key in `meta` object for every new logs.
+
+If you want the timestamp in `meta` with a different key, you can pass a string instead.
+
+### Properties
 
 #### `options`
 
@@ -213,7 +219,7 @@ In addition to the methods listed below, `Logger` instances will also have metho
 
 > createTransport(options = {})
 
-### Attributes
+### Properties
 
 #### logger
 

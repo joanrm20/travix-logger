@@ -1,5 +1,6 @@
 import defaultLevels from './defaultLevels';
 
 export default {
-  defaultLevels
+  defaultLevels,
+  defaultTimestampKey: 'timestamp'
 }

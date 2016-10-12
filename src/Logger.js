@@ -1,6 +1,6 @@
 import async from 'async';
 
-import { defaultLevels } from './constants';
+import { defaultLevels, defaultTimestampKey } from './constants';
 
 export default class Logger {
   constructor(opts = {}) {
@@ -15,6 +15,8 @@ export default class Logger {
 
       // default meta object, which log meta will extend from
       defaultMeta: {},
+
+      timestamp: false,
 
       ...opts
     };
@@ -49,6 +51,15 @@ export default class Logger {
           ...meta
         }
       };
+
+      if (this.options.timestamp) {
+        const timestamp = new Date();
+        const timestampKey = (typeof this.options.timestamp === 'string')
+          ? this.options.timestamp
+          : defaultTimestampKey;
+
+        formatted.meta[timestampKey] = timestamp;
+      }
 
       this.options.formatters.forEach((formatter) => {
         formatted = formatter(

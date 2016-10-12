@@ -180,4 +180,35 @@ describe('Logger', function () {
       }
     });
   });
+
+  it('logs with timestamp, when enabled', function () {
+    const logger = new Logger({
+      transports: [
+        TestTransport
+      ],
+      timestamp: true
+    });
+
+    logger.info('Info message', { key: 'value' });
+    expect(logs[0]).property('level', 'info');
+    expect(logs[0]).property('message', 'Info message');
+    expect(logs[0].meta).property('key', 'value');
+    expect(logs[0].meta.timestamp).to.be.an.instanceof(Date);
+  });
+
+  it('logs with timestamp, in a different meta key', function () {
+    const logger = new Logger({
+      transports: [
+        TestTransport
+      ],
+      timestamp: 'myTimestampKey'
+    });
+
+    logger.info('Info message', { key: 'value' });
+    expect(logs[0]).property('level', 'info');
+    expect(logs[0]).property('message', 'Info message');
+    expect(logs[0].meta).property('key', 'value');
+    expect(logs[0].meta.myTimestampKey).to.be.an.instanceof(Date);
+    expect(logs[0].meta.timestamp).to.be.undefined;
+  });
 });
