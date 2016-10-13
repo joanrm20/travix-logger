@@ -93,7 +93,7 @@ describe('Logger', function () {
     });
   });
 
-  it('sends log to multiple transports', function () {
+  it('sends log to multiple transports, and triggers callback when finished with all', function (done) {
     const logger = new Logger({
       transports: [
         TestTransport,
@@ -101,19 +101,23 @@ describe('Logger', function () {
       ]
     });
 
-    logger.log('Error', 'SomeErrorEvent', 'Error occurred');
+    logger.log('Error', 'SomeErrorEvent', 'Error occurred', {}, (err) => {
+      expect(err).to.equal(null);
 
-    expect(logs[0]).to.eql({
-      level: 'Error',
-      event: 'SomeErrorEvent',
-      message: 'Error occurred',
-      meta: {}
-    });
-    expect(logs2[0]).to.eql({
-      level: 'Error',
-      event: 'SomeErrorEvent',
-      message: 'Error occurred',
-      meta: {}
+      expect(logs[0]).to.eql({
+        level: 'Error',
+        event: 'SomeErrorEvent',
+        message: 'Error occurred',
+        meta: {}
+      });
+      expect(logs2[0]).to.eql({
+        level: 'Error',
+        event: 'SomeErrorEvent',
+        message: 'Error occurred',
+        meta: {}
+      });
+
+      done();
     });
   });
 

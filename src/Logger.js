@@ -1,9 +1,9 @@
-import async from 'async';
-
 import {
   defaultLevels,
   defaultKeys
 } from './constants';
+
+import each from './utils/each';
 
 export default class Logger {
   constructor(opts = {}) {
@@ -67,7 +67,7 @@ export default class Logger {
   }
 
   log(level, event, message, meta = {}, logCallback = null) {
-    async.each(this.transportInstances, (transport, asyncCallback) => {
+    each(this.transportInstances, (transport, asyncCallback) => {
       let formatted = {
         level,
         event,

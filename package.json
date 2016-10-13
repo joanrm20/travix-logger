@@ -40,7 +40,6 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "async": "^1.5.2",
     "isomorphic-fetch": "^2.2.1"
   }
 }

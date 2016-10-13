@@ -7,6 +7,8 @@ import Logger from './Logger';
 import configureConsoleTransport from './transports/console';
 import configureHttpTransport from './transports/http';
 
+import each from './utils/each';
+
 module.exports = {
   constants,
   createTransport,
@@ -15,5 +17,8 @@ module.exports = {
 
   // configureable transports
   configureConsoleTransport,
-  configureHttpTransport
+  configureHttpTransport,
+
+  // utils
+  each
 };
