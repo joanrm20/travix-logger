@@ -34,8 +34,6 @@ logger.error('EventName', 'Some error occurred', { meta: 'values' });
 In the browser:
 
 ```html
-<script src="https://unpkg.com/async@1.5.2/dist/async.min.js"></script>
-
 <script src="https://unpkg.com/travix-logger@latest/dist/travix-logger.min.js"></script>
 
 <script>
@@ -278,6 +276,20 @@ This method must be implemented when creating a new Transport.
 If there is any issue while processing the log, call `cb(new Error('something went wrong'))`.
 
 Otherwise, call `cb(null)`;
+
+## each
+
+> each(arr, iterator, cb)
+
+Utility function for processing an array asynchronously.
+
+### Arguments
+
+1. `arr` (`Array`): Array to iterate
+1. `iterator` (`Function`): Accepting these arguments:
+    1. `item`: The iterated item from the array
+    1. `cb` (`Function`): Call `cb(null)` when processed successfully, otherwise call `cb(err)`.
+1. `cb` (`Function`): Called with `null` when all items processed successfully, otherwise with `err`.
 
 ---
 
