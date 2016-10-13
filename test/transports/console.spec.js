@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach */
+/* global describe, it */
 import { expect } from 'chai';
 
 import { configureConsoleTransport, Transport } from '../../src';

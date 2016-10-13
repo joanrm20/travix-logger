@@ -17,13 +17,13 @@ describe('Transport :: http', function () {
 
   it('throws error if no `url` is given', function () {
     expect(() => {
-      const HttpTransport = configureHttpTransport({});
+      configureHttpTransport({});
     }).to.throw(/Must provide `url`/);
   });
 
   it('throws error if a method is provided, that does not accept body', function () {
     expect(() => {
-      const HttpTransport = configureHttpTransport({
+      configureHttpTransport({
         url: 'http://example.com',
         method: 'GET'
       });
