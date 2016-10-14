@@ -10,6 +10,8 @@ describe('Transport :: console', function () {
 
     const consoleTransport = new ConsoleTransport();
     expect(consoleTransport).to.be.an.instanceof(Transport);
+
+    expect(consoleTransport.name).to.equal('ConsoleTransport');
   });
 
   it('calls `console.log` on every log', function () {
@@ -25,6 +27,8 @@ describe('Transport :: console', function () {
     });
 
     const consoleTransport = new ConsoleTransport();
+    expect(consoleTransport.name).to.equal('ConsoleTransport');
+
     consoleTransport.log('Error', 'SomeEvent', 'Error message', { key: 'value' }, () => {});
     expect(logs).to.eql([
       {
@@ -44,10 +48,12 @@ describe('Transport :: console', function () {
       }
     };
     const ConsoleTransport = configureConsoleTransport({
+      name: 'MyCustomConsoleTransport',
       console: fakeConsole,
       levels: ['Information', 'Error']
     });
     const consoleTransport = new ConsoleTransport();
+    expect(consoleTransport.name).to.equal('MyCustomConsoleTransport');
 
     consoleTransport.log('Error', 'SomeEvent', 'Error message', { key: 'value' }, () => {});
     consoleTransport.log('Warning', 'SomeEvent', 'Warn message', { key: 'value' }, () => {});

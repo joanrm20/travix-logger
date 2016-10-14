@@ -27,4 +27,21 @@ describe('createTransport', function () {
       });
     }).to.not.throw();
   });
+
+  it('gives the generated class a name, statically and at instance level', function () {
+    const TestTransport = createTransport({
+      name: 'TestTransportNameHere',
+
+      log(level, message, meta, cb) {
+        cb(null);
+      }
+    });
+
+    expect(TestTransport.name).to.equal('TestTransportNameHere');
+
+    const testTransport = new TestTransport({
+      logger: true
+    });
+    expect(testTransport.name).to.equal('TestTransportNameHere');
+  });
 });

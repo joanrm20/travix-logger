@@ -78,6 +78,10 @@ export default function configureHttpTransport(options = {}) {
     ? options.levels
     : null;
 
+  const name = (typeof options.name !== 'undefined')
+    ? options.name
+    : 'HttpTransport';
+
   const eventKey = (typeof options.eventKey !== 'undefined')
     ? options.eventKey
     : defaultKeys.event;
@@ -94,6 +98,8 @@ export default function configureHttpTransport(options = {}) {
     };
 
   return createTransport({
+    name,
+
     log(level, event, message, meta, cb) {
       if (levels && levels.indexOf(level) === -1) {
         // skipping

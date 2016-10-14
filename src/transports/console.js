@@ -18,14 +18,16 @@ export default function configureConsoleTransport(options = {}) {
     ? options.levels
     : null;
 
+  const name = (typeof options.name !== 'undefined')
+    ? options.name
+    : 'ConsoleTransport';
+
   const useConsole = (typeof options.console !== 'undefined')
     ? options.console
     : console; // eslint-disable-line
 
   return createTransport({
-    initialize() {
-
-    },
+    name,
 
     log(level, event, message, meta, cb) {
       if (levels && levels.indexOf(level) === -1) {

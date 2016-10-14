@@ -5,9 +5,15 @@ export default function createTransport(opts = {}) {
     throw new Error('Must provide a `log` method.');
   }
 
+  const name = (typeof opts.name !== 'undefined')
+    ? opts.name
+    : 'Transport';
+
   class GeneratedTransport extends Transport {
     constructor(options) {
       super(options);
+
+      this.name = name;
 
       if (typeof opts.initialize !== 'undefined') {
         opts.initialize.bind(this)(options);
@@ -16,6 +22,10 @@ export default function createTransport(opts = {}) {
       this.log = opts.log.bind(this);
     }
   }
+
+  Object.defineProperty(GeneratedTransport, 'name', {
+    value: name
+  });
 
   return GeneratedTransport;
 }

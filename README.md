@@ -235,6 +235,10 @@ For mapping `Error.message` value in `meta`, when logging exceptions. Defaults t
 
 For mapping `Error.stack` value in `meta`, when logging exceptions. Defaults to `exceptiondetails`.
 
+#### `name`
+
+You can give each Transport a name.
+
 ### Properties
 
 #### `options`
@@ -253,21 +257,15 @@ In addition to the methods listed below, `Logger` instances will also have metho
 
 > createTransport(options = {})
 
-### Properties
+### Options
 
-#### logger
-
-Reference to the parent `Logger` instance.
-
-### Methods
-
-#### initialize
+#### `initialize`
 
 > initialize()
 
 Called when the Tranport class is constructed.
 
-#### log
+#### `log`
 
 > log(level, event, message, meta, cb)
 
@@ -276,6 +274,16 @@ This method must be implemented when creating a new Transport.
 If there is any issue while processing the log, call `cb(new Error('something went wrong'))`.
 
 Otherwise, call `cb(null)`;
+
+#### `name`
+
+Custom name for the Transport class, defaults to `Transport`.
+
+### Properties
+
+#### logger
+
+Reference to the parent `Logger` instance.
 
 ## each
 
@@ -322,6 +330,10 @@ Unless any function is provided here, it will default to the global scope's `con
 
 Optional array of level names. If present, only those levels will be logged by this transport.
 
+#### `name`
+
+Defaults to `ConsoleTransport`.
+
 ## Http
 
 Transport for sending log data to a remote location:
@@ -364,6 +376,10 @@ Optional array of level names. If present, only those levels will be logged by t
 One of the HTTP methods, defaults to `POST`.
 
 `GET` and `HEAD` are not allowed, since they do not support `body`.
+
+#### `name`
+
+Defaults to `HttpTransport`.
 
 #### `eventKey`
 

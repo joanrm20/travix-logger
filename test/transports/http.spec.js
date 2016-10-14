@@ -10,6 +10,7 @@ describe('Transport :: http', function () {
       url: 'http://example.com/'
     });
     expect(HttpTransport).to.be.a('function');
+    expect(HttpTransport.name).to.equal('HttpTransport');
 
     const httpTransport = new HttpTransport();
     expect(httpTransport).to.be.an.instanceof(Transport);
@@ -37,6 +38,7 @@ describe('Transport :: http', function () {
       eventKey: 'event'
     });
     const httpTransport = new HttpTransport({ logger: true });
+    expect(httpTransport.name).to.equal('HttpTransport');
 
     nock('http://logs.example.com')
       .post('/submit', {
@@ -81,6 +83,7 @@ describe('Transport :: http', function () {
 
   it('sends data over HTTP, with formatted body', function (done) {
     const HttpTransport = configureHttpTransport({
+      name: 'MyCustomHttpTransport',
       url: 'http://logs.example.com/submit',
       method: 'POST',
       formatBody(level, event, message, meta) {
@@ -94,6 +97,7 @@ describe('Transport :: http', function () {
       }
     });
     const httpTransport = new HttpTransport({ logger: true });
+    expect(httpTransport.name).to.equal('MyCustomHttpTransport');
 
     nock('http://logs.example.com')
       .post('/submit', {
