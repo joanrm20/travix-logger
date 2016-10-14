@@ -50,7 +50,13 @@ describe('Transport :: console', function () {
     const ConsoleTransport = configureConsoleTransport({
       name: 'MyCustomConsoleTransport',
       console: fakeConsole,
-      levels: ['Information', 'Error']
+      levels: ['Information', 'Error'],
+      filter(level) {
+        return [
+          'Information',
+          'Error'
+        ].indexOf(level) > -1;
+      }
     });
     const consoleTransport = new ConsoleTransport();
     expect(consoleTransport.name).to.equal('MyCustomConsoleTransport');

@@ -74,9 +74,9 @@ export default function configureHttpTransport(options = {}) {
     throw new Error('Method does not accept `body`.');
   }
 
-  const levels = (typeof options.levels !== 'undefined')
-    ? options.levels
-    : null;
+  const filter = (typeof options.filter !== 'undefined')
+    ? options.filter
+    : () => true;
 
   const name = (typeof options.name !== 'undefined')
     ? options.name
@@ -101,7 +101,7 @@ export default function configureHttpTransport(options = {}) {
     name,
 
     log(level, event, message, meta, cb) {
-      if (levels && levels.indexOf(level) === -1) {
+      if (!filter(level, event, message, meta)) {
         // skipping
         return cb(null);
       }

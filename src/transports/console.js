@@ -14,9 +14,9 @@ import createTransport from '../createTransport';
  * ```
  */
 export default function configureConsoleTransport(options = {}) {
-  const levels = (typeof options.levels !== 'undefined')
-    ? options.levels
-    : null;
+  const filter = (typeof options.filter !== 'undefined')
+    ? options.filter
+    : () => true;
 
   const name = (typeof options.name !== 'undefined')
     ? options.name
@@ -30,7 +30,7 @@ export default function configureConsoleTransport(options = {}) {
     name,
 
     log(level, event, message, meta, cb) {
-      if (levels && levels.indexOf(level) === -1) {
+      if (!filter(level, event, message, meta)) {
         // skipping
         return cb(null);
       }

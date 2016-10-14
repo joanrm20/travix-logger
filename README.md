@@ -235,10 +235,6 @@ For mapping `Error.message` value in `meta`, when logging exceptions. Defaults t
 
 For mapping `Error.stack` value in `meta`, when logging exceptions. Defaults to `exceptiondetails`.
 
-#### `name`
-
-You can give each Transport a name.
-
 ### Properties
 
 #### `options`
@@ -326,9 +322,17 @@ const logger = new Logger({
 
 Unless any function is provided here, it will default to the global scope's `console` object. Like `window.console` in the browser.
 
-#### `levels`
+#### `filter`
 
-Optional array of level names. If present, only those levels will be logged by this transport.
+Optional function that filters the logs from being processed. Defaults to returning `true` for all logs.
+
+Example:
+
+```js
+function filter(level, event, message, meta) {
+  return true;
+}
+```
 
 #### `name`
 
@@ -367,9 +371,17 @@ const logger = new Logger({
 
 URL to send the log data to.
 
-#### `levels`
+#### `filter`
 
-Optional array of level names. If present, only those levels will be logged by this transport.
+Optional function that filters the logs from being processed. Defaults to returning `true` for all logs.
+
+Example:
+
+```js
+function filter(level, event, message, meta) {
+  return true;
+}
+```
 
 #### `method`
 
