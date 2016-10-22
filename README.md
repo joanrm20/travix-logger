@@ -4,6 +4,19 @@
 
 > Logger library for the browser and node.js
 
+* [Installation](#installation)
+* [Usage](#usage)
+* [Guide](#guide)
+  * [Levels](#levels)
+  * [Transports](#transports)
+  * [Formatters](#formatters)
+* [API](#api)
+  * [`Logger`](#logger)
+  * [`createTransport`](#createtransport)
+* [Built-in transports](#built-in-transports)
+  * [Console](#console)
+  * [Http](#http)
+
 ## Installation
 
 Install it via [npm](https://npmjs.com):
