@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.6.1](https://github.com/Travix-International/travix-logger/tree/v0.6.1) (2016-11-15)
+[Full Changelog](https://github.com/Travix-International/travix-logger/compare/v0.6.0...v0.6.1)
+
+**Closed issues:**
+
+- An in-range update of babel-core is breaking the build 🚨 [\#3](https://github.com/Travix-International/travix-logger/issues/3)
+
+**Merged pull requests:**
+
+- Updates makes the minimum version to be 6.18.2 to fix issue \#3 [\#6](https://github.com/Travix-International/travix-logger/pull/6) ([mAiNiNfEcTiOn](https://github.com/mAiNiNfEcTiOn))
+
 ## [v0.6.0](https://github.com/Travix-International/travix-logger/tree/v0.6.0) (2016-11-15)
 [Full Changelog](https://github.com/Travix-International/travix-logger/compare/v0.5.0...v0.6.0)
 
