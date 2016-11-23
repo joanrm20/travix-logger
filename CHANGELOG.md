@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.6.2](https://github.com/Travix-International/travix-logger/tree/v0.6.2) (2016-11-23)
+[Full Changelog](https://github.com/Travix-International/travix-logger/compare/v0.6.1...v0.6.2)
+
+**Merged pull requests:**
+
+- Updates eslint to 3.10.2, fixing issue \#7 [\#8](https://github.com/Travix-International/travix-logger/pull/8) ([mAiNiNfEcTiOn](https://github.com/mAiNiNfEcTiOn))
+
 ## [v0.6.1](https://github.com/Travix-International/travix-logger/tree/v0.6.1) (2016-11-15)
 [Full Changelog](https://github.com/Travix-International/travix-logger/compare/v0.6.0...v0.6.1)
 
