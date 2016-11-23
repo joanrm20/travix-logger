@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.6.3](https://github.com/Travix-International/travix-logger/tree/v0.6.3) (2016-11-23)
+[Full Changelog](https://github.com/Travix-International/travix-logger/compare/v0.6.2...v0.6.3)
+
+**Merged pull requests:**
+
+- Update nyc to the latest version 🚀 [\#9](https://github.com/Travix-International/travix-logger/pull/9) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+
 ## [v0.6.2](https://github.com/Travix-International/travix-logger/tree/v0.6.2) (2016-11-23)
 [Full Changelog](https://github.com/Travix-International/travix-logger/compare/v0.6.1...v0.6.2)
 
