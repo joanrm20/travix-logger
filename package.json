@@ -1,6 +1,6 @@
 {
   "name": "travix-logger",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Logger library for the browser and node.js",
   "main": "index.js",
   "scripts": {
