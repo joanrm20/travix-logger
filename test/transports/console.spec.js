@@ -80,4 +80,32 @@ describe('Transport :: console', function () {
       }
     ]);
   });
+
+  it('customize logging string', function () {
+    const logs = [];
+    const fakeConsole = {
+      log(log) {
+        logs.push(log);
+      }
+    };
+    const ConsoleTransport = configureConsoleTransport({
+      name: 'MyCustomConsoleTransport',
+      console: fakeConsole,
+      format(level, event, message, meta) {
+        return `${level} - ${message} - ${JSON.stringify(meta)}`;    
+      }
+    });
+    const consoleTransport = new ConsoleTransport();
+    expect(consoleTransport.name).to.equal('MyCustomConsoleTransport');
+
+    consoleTransport.log('Error', 'SomeEvent', 'Error message', { key: 'value' }, () => {});
+    consoleTransport.log('Warning', 'SomeEvent', 'Warn message', { key: 'value' }, () => {});
+    consoleTransport.log('Information', 'SomeEvent', 'Info message', { key: 'value' }, () => {});
+
+    expect(logs).to.eql([
+      "Error - Error message - {\"key\":\"value\"}",
+      "Warning - Warn message - {\"key\":\"value\"}",
+      "Information - Info message - {\"key\":\"value\"}"
+    ]);
+  });
 });

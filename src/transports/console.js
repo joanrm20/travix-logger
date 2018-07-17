@@ -18,6 +18,10 @@ export default function configureConsoleTransport(options = {}) {
     ? options.filter
     : () => true;
 
+  const format = (typeof options.format !== 'undefined')
+    ? options.format
+    : null;
+
   const name = (typeof options.name !== 'undefined')
     ? options.name
     : 'ConsoleTransport';
@@ -35,7 +39,11 @@ export default function configureConsoleTransport(options = {}) {
         return cb(null);
       }
 
-      useConsole.log(`[${level}]`, event, message, meta);
+      if (format) {
+        useConsole.log(format(level, event, message, meta));
+      } else {
+        useConsole.log(`[${level}]`, event, message, meta);
+      }
 
       cb(null);
     }

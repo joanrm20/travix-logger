@@ -347,6 +347,18 @@ function filter(level, event, message, meta) {
 }
 ```
 
+#### `format`
+
+Optional function that can customize log string in a console.
+
+Example:
+
+```js
+function format(level, event, message, meta) {
+  return `${level} - ${message}`;
+}
+```
+
 #### `name`
 
 Defaults to `ConsoleTransport`.
